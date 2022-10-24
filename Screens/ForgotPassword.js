@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
     paddingVertical: 25,
-    marginTop: 30,
+    marginTop: 31,
     alignItems: 'center'
   },
   btn: {
