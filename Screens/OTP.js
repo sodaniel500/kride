@@ -14,7 +14,7 @@ const OTP = ({ navigation }) => {
             style={{ width: '100%', height: 360, alignSelf: 'center' }}
           />
 
-          <View style={{ marginHorizontal: 22 }} s>
+          <View style={{ marginHorizontal: 22 }}>
             <Text style={{ fontSize: 36, fontWeight: 'bold', color: '#154354', }}>Enter OTP</Text>
 
             <View style={{}}>

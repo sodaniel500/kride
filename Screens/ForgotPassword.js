@@ -11,10 +11,10 @@ const [showEmailIcon, setShowEmailIcon] = useState(false)
 
 useEffect(() => {
   console.log("Email Value is: ", email)
-  if (email !== "" && email !== undefined) {
-    setShowEmailIcon(true)
-  } else {
-    setShowEmailIcon(false)
+  if (email !== " " && email !== undefined) {        //if eamil is not empty or its not undefined, 
+    setShowEmailIcon(true)                           // show the the icon
+  } else {                                           // if not 
+    setShowEmailIcon(false)                          // do not show it . 
   }
 }, [email])
 

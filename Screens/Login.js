@@ -1,9 +1,11 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, handlePress, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, handlePress, ScrollView, Alert } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import React from 'react'
 import { useState, useEffect } from 'react';
+import { auth } from '../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 // const {data, setData} = React.useState({
 //   Login: '',
@@ -30,10 +32,22 @@ import { useState, useEffect } from 'react';
 
 const Login = ({ navigation }) => {
 
-  const [email, setEmail] = useState()
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [showEmailIcon, setShowEmailIcon] = useState(false)
-  const [passwordVisible, setPasswordVisible] = useState(true)
+
+
+  const onHandLeLogin = () => {
+    if (email != "" && password !== "" ) {
+      signInWithEmailAndPassword(auth, email, password)
+      .then(() => console.log('Login Success'))
+      .catch((err) => Alert.alert("Login error", err.message))
+    }
+  }
+ 
+  // const [emaill, setEmaill] = useState()
+  // const [passwordd, setPasswordd] = useState("")
+  // const [showEmailIcon, setShowEmailIcon] = useState(false)
+  // const [passwordVisible, setPasswordVisible] = useState(true)
 
   const handlePassword = () => {
     setPasswordVisible(!passwordVisible)
@@ -43,14 +57,14 @@ const Login = ({ navigation }) => {
   //   console.log("Password:: ", password)
   // }, [password])
 
-  useEffect(() => {
-    // console.log("Email Value is: ", email)
-    if (email !== "" && email !== undefined) {
-      setShowEmailIcon(true)
-    } else {
-      setShowEmailIcon(false)
-    }
-  }, [email])
+  // useEffect(() => {
+  //   // console.log("Email Value is: ", email)
+  //   if (emaill !== "" && emaill !== undefined) {
+  //     setShowEmailIcon(true)
+  //   } else {
+  //     setShowEmailIcon(false)
+  //   }
+  // }, [emaill])
   
 
   return (
@@ -74,13 +88,18 @@ const Login = ({ navigation }) => {
                 placeholder='Email ID'
                 style={{flex:1, paddingLeft: 10, color: '#05375a' }}
                 autoCapitalize='none'
-                onChangeText={(val) => setEmail(val)} />
-               
-              {showEmailIcon && (
-                <Feather name="check-circle" size={24} color="black"
-                  style={styles.got}
+                keyboardType='email-address'
+                textContentType='emaillAddress'
+                autoFocus={true}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                // onChangeText={(val) => setEmaill(val)} 
                 />
-              )}
+                  
+                <Feather name="check-circle" size={24} color="black"
+                style={styles.got}
+              />
+               {/* {showEmailIcon && ( )} */}
 
             </View>
 
@@ -92,18 +111,22 @@ const Login = ({ navigation }) => {
                 placeholder='Password'
                 style={{ flex: 1, paddingLeft: 10, color: '#05375a' }}
                 autoCapitalize='none'
-                secureTextEntry={passwordVisible}
-                onChangeText={(val) => setPassword(val)}
+                secureTextEntry={true}
+                textContentType='password'
+                value='password'
+                onChangeText={(text) => setPassword(text)}
+                // onChangeText={(val) => setPasswordd(val)}
+
               />
 
               <TouchableOpacity onPress={handlePassword}>
-              {passwordVisible ?
+              {/* {passwordVisible ? */}
                 <Feather name="eye-off" size={24} color="gray"
                 style={styles.got} />
-                :
+                {/* : */}
                 <Feather name="eye" size={24} color="gray"
                 style={styles.got} />
-              }
+              {/* } */}
               </TouchableOpacity>
             </View>
 
@@ -116,7 +139,7 @@ const Login = ({ navigation }) => {
             </View>
 
             <View style={{ marginTop: 10, }} >
-              <TouchableOpacity onPress={handlePress}>
+              <TouchableOpacity onPress={onHandLeLogin}>
                 <View style={styles.btn}>
                   <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Login</Text>
                 </View>

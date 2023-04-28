@@ -6,6 +6,7 @@ import Login from './Screens/Login'
 import ForgotPassword from './Screens/ForgotPassword'
 import OTP from './Screens/OTP'
 import ResetPassword from './Screens/ResetPassword'
+import HomeScreen from './Screens/HomeScreen'
 
 const stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const App = () => {
       <stack.Navigator screenOptions={{headerShown: false}}>
         <stack.Screen name="SignUp" component={SignUp} />
         <stack.Screen name="Login" component={Login} />
+        <stack.Screen name="HomeScreen" component={HomeScreen} />
         <stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <stack.Screen name="OTP" component={OTP} />
         <stack.Screen name="ResetPassword" component={ResetPassword} />
