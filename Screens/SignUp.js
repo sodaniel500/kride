@@ -1,10 +1,26 @@
 import { View, Text, Image, ScrollView, SafeAreaView, StyleSheet, Pressable, TouchableOpacity, TextInput, handlePress } from 'react-native'
 import React from 'react'
+import { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { auth } from '../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const SignUp = ({ navigation }) => {
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const onHandLeSignup = () => {
+    if (email != "" && password !== "") {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => console.log('Signup Success'))
+        .catch((err) => Alert.alert("SignIn error", err.message))
+    }
+  }
+
   return (
+
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -23,7 +39,12 @@ const SignUp = ({ navigation }) => {
             <TextInput
               placeholder='Email'
               style={{ paddingLeft: 10, color: '#05375a' }}
-              autoCapitalize='none' />
+              autoCapitalize='none'
+              keyboardType='email-address'
+              // textContentType='emaillAddress'
+              autoFocus={true}
+              value={email}
+              onChangeText={(text) => setEmail(text)} />
 
           </View>
 
@@ -32,16 +53,25 @@ const SignUp = ({ navigation }) => {
             <TextInput
               placeholder='Full Name'
               style={{ paddingLeft: 10, color: '#05375a' }}
-              autoCapitalize='none' />
+              autoCapitalize='none'
+              />
+
 
           </View>
 
 
           <View style={styles.textInput}>
-            <Feather name="phone" size={18} color="gray" />
+          <Ionicons name="md-lock-closed-outline" size={18} color="gray" />
             <TextInput
-              placeholder='Mobile'
-              style={{ paddingLeft: 10, color: '#05375a' }} />
+              placeholder='Password'
+              style={{ paddingLeft: 10, color: '#05375a' }}
+              autoCapitalize='none'
+              autoCorrect={false}
+              secureTextEntry={true}
+              textContentType='password'
+              // value='password'h
+              onChangeText={(text) => setPassword(text)} />
+
 
           </View>
 
@@ -63,7 +93,7 @@ const SignUp = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={handlePress}>
+          <TouchableOpacity onPress={onHandLeSignup}>
             <View style={styles.btn}>
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Continue</Text>
             </View>
